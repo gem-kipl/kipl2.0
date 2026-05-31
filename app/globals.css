@@ -1,0 +1,197 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================
+   THEME PALETTES — channels are "R G B" (space separated)
+   ============================================================ */
+:root,
+[data-theme='verdant'] {
+  --c-bg: 242 247 244;
+  --c-fg: 11 42 48;
+  --c-muted-fg: 76 98 92;
+  --c-accent: 28 127 196; /* water blue */
+  --c-accent-fg: 255 255 255;
+  --c-accent2: 61 166 60; /* leaf green */
+  --c-card: 255 255 255;
+  --c-card-fg: 11 42 48;
+  --c-surface2: 226 238 231;
+  --c-border: 207 224 216;
+  --c-input: 201 219 210;
+  --c-ring: 28 127 196;
+  --c-btn: 11 42 48;
+  --c-btn-fg: 242 247 244;
+  --grad-from: #1c7fc4;
+  --grad-to: #3da63c;
+  --glass-bg: rgba(242, 247, 244, 0.55);
+  --glass-border: rgba(11, 42, 48, 0.08);
+}
+
+[data-theme='aurum'] {
+  --c-bg: 14 11 8; /* espresso */
+  --c-fg: 243 236 224; /* cream */
+  --c-muted-fg: 184 172 153;
+  --c-accent: 200 134 46; /* gold-500 */
+  --c-accent-fg: 14 11 8;
+  --c-accent2: 224 169 74; /* gold-400 */
+  --c-card: 33 25 19; /* raised espresso */
+  --c-card-fg: 243 236 224;
+  --c-surface2: 33 25 19;
+  --c-border: 224 169 74; /* gold (used with /alpha) */
+  --c-input: 58 46 30;
+  --c-ring: 200 134 46;
+  --c-btn: 200 134 46; /* gold button */
+  --c-btn-fg: 14 11 8;
+  --grad-from: #f0c77a;
+  --grad-to: #c8862e;
+  --glass-bg: rgba(20, 16, 11, 0.55);
+  --glass-border: rgba(224, 169, 74, 0.16);
+}
+
+/* Inverted dark chapters (footer, dark sections) — always dark, light text,
+   in BOTH themes. Locally remaps neutral tokens so existing utility classes
+   (text-sand, border-ink/15 …) render light-on-dark. */
+.chapter-dark,
+.surface-invert {
+  --c-bg: 243 236 224;
+  --c-fg: 243 236 224;
+  --c-muted-fg: 184 172 153;
+  --c-card-fg: 243 236 224;
+  color: #f3ece0;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+[data-theme='verdant'] .chapter-dark,
+[data-theme='verdant'] .surface-invert {
+  background-color: rgba(11, 42, 48, 0.9);
+  --c-card: 13 47 54;
+  --c-surface2: 18 56 60;
+  --c-border: 243 247 244;
+  --c-accent: 53 168 224;
+  --c-accent2: 141 198 63;
+}
+[data-theme='aurum'] .chapter-dark,
+[data-theme='aurum'] .surface-invert {
+  background-color: rgba(18, 14, 9, 0.88);
+  --c-card: 33 25 19;
+  --c-surface2: 40 32 24;
+  --c-border: 224 169 74;
+  --c-accent: 224 169 74;
+  --c-accent2: 141 198 63;
+}
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  html.lenis,
+  html.lenis body {
+    height: auto;
+  }
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+  .lenis.lenis-stopped {
+    overflow: hidden;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans;
+    font-feature-settings: 'ss01', 'cv01';
+    transition: background-color 0.4s ease, color 0.4s ease;
+  }
+
+  ::selection {
+    background: rgb(var(--c-accent));
+    color: rgb(var(--c-accent-fg));
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer components {
+  .eyebrow {
+    @apply text-xs font-medium uppercase tracking-label text-copper;
+  }
+
+  .text-gradient-brand {
+    background: linear-gradient(120deg, var(--grad-from), var(--grad-to));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .hairline {
+    @apply border-t border-ink/15;
+  }
+
+  .reveal {
+    opacity: 0;
+    will-change: transform, opacity;
+  }
+  .no-js .reveal,
+  .reveal.is-ready {
+    opacity: 1;
+  }
+
+  .glass {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(14px) saturate(120%);
+    -webkit-backdrop-filter: blur(14px) saturate(120%);
+  }
+
+  .marquee {
+    display: inline-flex;
+    white-space: nowrap;
+    will-change: transform;
+    animation: marquee-left var(--marquee-duration, 38s) linear infinite;
+  }
+  .marquee-reverse {
+    animation-direction: reverse;
+  }
+  .marquee-group:hover .marquee {
+    animation-play-state: paused;
+  }
+
+  .wp-content h2 {
+    @apply mb-3 mt-10 font-display text-3xl tracking-editorial;
+  }
+  .wp-content h3 {
+    @apply mb-2 mt-8 font-display text-2xl;
+  }
+  .wp-content p {
+    @apply my-4 leading-relaxed text-clay;
+  }
+  .wp-content ul {
+    @apply my-4 list-disc space-y-2 pl-6 text-clay;
+  }
+  .wp-content ol {
+    @apply my-4 list-decimal space-y-2 pl-6 text-clay;
+  }
+  .wp-content a {
+    @apply text-copper underline underline-offset-4 hover:text-gold;
+  }
+  .wp-content strong {
+    @apply font-semibold text-ink;
+  }
+}
+
+@keyframes marquee-left {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
