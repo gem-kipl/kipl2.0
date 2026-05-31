@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { Reveal } from '@/components/animation/reveal';
 import { Counter } from '@/components/animation/counter';
 import { HeroPhoto } from '@/components/editions/aurum/hero-photo';
+import { getSiteContent } from '@/lib/site-config';
 import { ROUTES } from '@/lib/constants';
 
 const CERTS = [
@@ -14,11 +15,12 @@ const CERTS = [
 
 const PROCESS = ['Raw Material Control', 'In-Process Monitoring', 'Finished Product Testing', 'Traceability', 'Continuous Improvement'];
 
-export function AurumQuality() {
+export async function AurumQuality() {
+  const { heroImages } = await getSiteContent();
   return (
     <div className="-mt-16">
       <section className="relative grid min-h-[70vh] items-center overflow-hidden">
-        <HeroPhoto src="/images/aurum/quality.jpg" focus="center" />
+        <HeroPhoto src={heroImages.quality} focus="center" />
         <div className="mx-auto grid w-full max-w-container items-center gap-10 px-6 pt-28 lg:grid-cols-[1.2fr_0.8fr] lg:px-10">
         <div>
           <p className="eyebrow mb-6">Quality That Defines Excellence</p>

@@ -3,17 +3,12 @@ import { MorphMount } from '@/components/three/morph-mount';
 import { Counter } from '@/components/animation/counter';
 import { Reveal } from '@/components/animation/reveal';
 import { CATEGORIES, CERTIFICATIONS } from '@/lib/site-content';
+import { getSiteContent } from '@/lib/site-config';
 import { ROUTES } from '@/lib/constants';
 
-const STATS = [
-  { to: 90, suffix: '+', label: 'Products', sub: 'Aroma & specialty range' },
-  { to: 25000, suffix: ' MT', label: 'Annual Capacity', sub: 'High-volume production' },
-  { to: 40, suffix: '+', label: 'Countries', sub: 'Global export network' },
-  { to: 3, suffix: '+', label: 'Decades', sub: 'Of trusted expertise' },
-];
-
 /** Aurum edition homepage — recreates "The Home Page" reference (command center). */
-export function AurumHome() {
+export async function AurumHome() {
+  const { hero } = await getSiteContent();
   return (
     <>
       <MorphMount /> {/* ambient liquid-gold molecular glow */}
@@ -24,18 +19,16 @@ export function AurumHome() {
             <div className="grid gap-12 lg:grid-cols-[1.25fr_0.75fr] lg:items-start">
               {/* Left — headline + lead + CTAs */}
               <div>
-                <p className="eyebrow mb-6">Where Science Meets Scent</p>
+                <p className="eyebrow mb-6">{hero.eyebrow}</p>
                 <h1 className="font-display text-display font-light leading-[1.04] text-foreground">
-                  Global Solutions.
+                  {hero.headline1}
                   <br />
-                  Pure Ingredients.
+                  {hero.headline2}
                   <br />
-                  <span className="text-gradient-brand">Trusted Worldwide.</span>
+                  <span className="text-gradient-brand">{hero.headline3}</span>
                 </h1>
                 <p className="mt-7 max-w-xl text-lg leading-relaxed text-muted-foreground">
-                  Krystal Ingredients delivers high-quality aroma chemicals, essential oils and
-                  specialty ingredients to manufacturers and industries around the world — with
-                  uncompromising quality and dependable global supply.
+                  {hero.subheadline}
                 </p>
 
                 <div className="mt-9 flex flex-wrap items-center gap-5">
@@ -60,10 +53,10 @@ export function AurumHome() {
 
                 {/* Stat row */}
                 <div className="mt-14 grid grid-cols-2 gap-px overflow-hidden rounded-xl border border-border/60 bg-border/30 sm:grid-cols-4">
-                  {STATS.map((s) => (
+                  {hero.stats.map((s) => (
                     <div key={s.label} className="glass p-5">
                       <Counter
-                        to={s.to}
+                        to={Number(s.value) || 0}
                         suffix={s.suffix}
                         className="text-gradient-brand font-display text-3xl font-light lg:text-4xl"
                       />

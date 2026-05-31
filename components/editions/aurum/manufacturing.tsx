@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { Reveal } from '@/components/animation/reveal';
 import { Counter } from '@/components/animation/counter';
 import { HeroPhoto } from '@/components/editions/aurum/hero-photo';
+import { getSiteContent } from '@/lib/site-config';
 import { ROUTES } from '@/lib/constants';
 
 const STATS = [
@@ -23,12 +24,13 @@ const PIPELINE = [
 
 const FEATURES = ['Advanced Technology', 'R&D Excellence', 'Strict Quality Control', 'Sustainable Practices'];
 
-export function AurumManufacturing() {
+export async function AurumManufacturing() {
+  const { heroImages } = await getSiteContent();
   return (
     <div className="-mt-16">
       {/* Cinematic hero (gradient stand-in for plant photography) */}
       <section className="relative flex min-h-[85vh] items-center overflow-hidden">
-        <HeroPhoto src="/images/aurum/manufacturing.jpg" focus="center" />
+        <HeroPhoto src={heroImages.manufacturing} focus="center" />
         <div
           className="pointer-events-none absolute inset-0"
           style={{ background: 'radial-gradient(120% 90% at 75% 60%, rgba(200,134,46,0.28), transparent 55%)' }}

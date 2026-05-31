@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { Reveal } from '@/components/animation/reveal';
 import { HeroPhoto } from '@/components/editions/aurum/hero-photo';
+import { getSiteContent } from '@/lib/site-config';
 import { ROUTES } from '@/lib/constants';
 
 const SECTORS = [
@@ -14,11 +15,12 @@ const SECTORS = [
 
 const FEATURES = ['Sustainable Sourcing', 'Consistent Quality', 'Innovation Driven', 'Global Partnership'];
 
-export function AurumApplications() {
+export async function AurumApplications() {
+  const { heroImages } = await getSiteContent();
   return (
     <div className="-mt-16">
       <section className="relative flex min-h-[60vh] items-center overflow-hidden">
-        <HeroPhoto src="/images/aurum/applications.jpg" focus="center" />
+        <HeroPhoto src={heroImages.applications} focus="center" />
         <div className="mx-auto w-full max-w-container px-6 pt-28 lg:px-10">
           <p className="eyebrow mb-6">Powering Innovation Across Industries</p>
           <h1 className="max-w-3xl font-display text-display font-light leading-[1.04] text-foreground">

@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { Reveal } from '@/components/animation/reveal';
 import { Counter } from '@/components/animation/counter';
 import { HeroPhoto } from '@/components/editions/aurum/hero-photo';
+import { getSiteContent } from '@/lib/site-config';
 import { ROUTES } from '@/lib/constants';
 
 const VALUES = [
@@ -36,12 +37,13 @@ const STATS = [
   { to: 30, suffix: '+', label: 'Years of Excellence' },
 ];
 
-export function AurumAbout() {
+export async function AurumAbout() {
+  const { heroImages } = await getSiteContent();
   return (
     <div className="-mt-16">
       {/* Hero */}
       <section className="relative flex min-h-[80vh] items-center overflow-hidden">
-        <HeroPhoto src="/images/aurum/about.jpg" focus="center" />
+        <HeroPhoto src={heroImages.about} focus="center" />
         <div className="mx-auto w-full max-w-container px-6 pt-28 lg:px-10">
         <p className="eyebrow mb-6">Where Science Meets Scent</p>
         <h1 className="max-w-4xl font-display text-display font-light leading-[1.04] text-foreground">
